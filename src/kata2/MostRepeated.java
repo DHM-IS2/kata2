@@ -1,40 +1,31 @@
 package kata2;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MostRepeated{
-   
    public static int mostRepeated(int[] array){
-      ArrayList<Integer> isRepeated = new ArrayList<>();
+      int[] noRepNumbers = new int[array.length];
       int j = 0;
-      int[][] ocurrences = new int[array.length][2];
-      int mostRep;
+      int aux = 0;
+      HashMap<Integer,Integer> numbers = new HashMap<>();
       int frequency;
-      for (int i = 0; i < array.length; i++){
-         if (isRepeated.contains(array[i])){
-            for (int k = 0; k < j; k++){
-               if (array[i] == ocurrences[k][0]){
-                  ocurrences[k][1]++;    
-               }  
-            }
-            
-         }
-         else{
-            isRepeated.add(array[i]);
-            ocurrences[j][0] = array[i];
-            ocurrences[j][1]++;
+      for (int i = 0; i < array.length; i++) {
+         if (!numbers.containsKey(array[i])){
+            numbers.put(array[i], 1);
+            noRepNumbers[j] = array[i];
             j++;
          }
+         else{
+            frequency = numbers.get(array[i]);
+            numbers.put(array[i], frequency + 1);
+         }         
       }
-      mostRep = ocurrences[0][0];
-      frequency = ocurrences[0][1];
-      for (int i = 0; i < j; i++){
-         if (ocurrences[i][1] > frequency){
-            frequency = ocurrences[i][1];
-            mostRep = ocurrences[i][0];
-         }   
+      frequency = 0;
+      for (int i = 0; i < j; i++) {
+         if (numbers.get(noRepNumbers[i]) > frequency){
+            frequency = numbers.get(noRepNumbers[i]);
+            aux = noRepNumbers[i];
+         }
       }
-      return mostRep;    
-   }
+      return aux;
+   }    
 }
-
-
